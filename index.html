@@ -1381,6 +1381,179 @@
         max-width: 100%;
       }
     }
+
+    /* =============================================
+       SUBMIT BUTTON
+    ============================================= */
+    .submit-wrap {
+      margin-top: 52px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .ready-btn {
+      position: relative;
+      padding: 18px 44px;
+      background: linear-gradient(135deg, var(--deep-wine) 0%, var(--crimson) 50%, #5a0000 100%);
+      border: 1px solid var(--gold);
+      border-radius: 50px;
+      color: var(--gold-light);
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      font-style: italic;
+      letter-spacing: 2px;
+      cursor: pointer;
+      box-shadow:
+        0 0 28px rgba(139, 0, 0, 0.5),
+        0 0 60px rgba(212, 175, 55, 0.15),
+        inset 0 0 20px rgba(0, 0, 0, 0.3);
+      animation: btnPulse 1.8s ease-in-out infinite;
+      transition: all 0.4s ease;
+      overflow: hidden;
+    }
+
+    .ready-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), transparent 60%);
+      border-radius: 50px;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .ready-btn:hover {
+      transform: scale(1.06);
+      border-color: var(--gold-light);
+      box-shadow:
+        0 0 45px rgba(139, 0, 0, 0.6),
+        0 0 90px rgba(212, 175, 55, 0.3),
+        inset 0 0 25px rgba(0, 0, 0, 0.3);
+      color: #fff;
+    }
+
+    .ready-btn:hover::before {
+      opacity: 1;
+    }
+
+    .ready-btn:active {
+      transform: scale(0.98);
+    }
+
+    @keyframes btnPulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 28px rgba(139, 0, 0, 0.5), 0 0 60px rgba(212, 175, 55, 0.15), inset 0 0 20px rgba(0, 0, 0, 0.3);
+      }
+
+      50% {
+        box-shadow: 0 0 42px rgba(139, 0, 0, 0.7), 0 0 90px rgba(212, 175, 55, 0.28), inset 0 0 20px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    /* =============================================
+       READY OVERLAY
+    ============================================= */
+    .ready-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 5000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(6, 3, 10, 0.92);
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.55s ease;
+    }
+
+    .ready-overlay.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .ov-hearts {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .ov-card {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 60px 48px 48px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 28px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 0 80px rgba(139, 0, 0, 0.4), 0 0 140px rgba(196, 100, 122, 0.2);
+      max-width: 480px;
+      width: 90%;
+      animation: ovCardPop 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    @keyframes ovCardPop {
+      from {
+        transform: scale(0.7) translateY(30px);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .ov-candle {
+      font-size: 2.8rem;
+      margin-bottom: 24px;
+      animation: glowPulse 1.2s ease-in-out infinite alternate;
+      display: block;
+    }
+
+    .ov-big {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      font-style: italic;
+      font-weight: 700;
+      background: linear-gradient(130deg, var(--cream), var(--gold-light), var(--rose));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+
+    .ov-small {
+      font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+      font-style: italic;
+      color: rgba(245, 230, 211, 0.65);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+
+    .ov-close {
+      padding: 9px 26px;
+      background: transparent;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-radius: 30px;
+      color: rgba(212, 175, 55, 0.7);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .ov-close:hover {
+      background: rgba(212, 175, 55, 0.1);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
   </style>
 </head>
 
@@ -1919,12 +2092,30 @@
       Tonight isn't just dinner.<br />
       It's a memory I want to make<br />with you. 🕯️
     </p>
+
+    <!-- ✦ SUBMIT BUTTON ✦ -->
+    <div class="submit-wrap rv d4">
+      <button id="readyBtn" class="ready-btn" onclick="handleReadyClick()">
+        <span class="btn-inner">I'm Ready for Tonight ✦</span>
+      </button>
+    </div>
   </section>
+
+  <!-- ======= OVERLAY POPUP ======= -->
+  <div id="readyOverlay" class="ready-overlay" aria-hidden="true">
+    <div class="ov-hearts" id="ovHearts"></div>
+    <div class="ov-card">
+      <div class="ov-candle">🕯️</div>
+      <p class="ov-big">See you tonight, Harshi</p>
+      <p class="ov-small">I am waiting. Get ready. 🖤</p>
+      <button class="ov-close" onclick="closeOverlay()">✕ Close</button>
+    </div>
+  </div>
 
   <!-- ======= CURSOR + INTERACTION JS ======= -->
   <script>
     /* ---- Google Sheets URL (paste your deployed Apps Script URL here) ---- */
-    const SHEET_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+    const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwcymXUrGr_LH2-6W-OHmqIyhHzRv-ak_2RL6xx9tTqT8AF1cni_UUiwCLRniOaf2x1/exec';
 
     /* ---- POST helper ---- */
     function sendToSheet(type, value) {
@@ -1972,6 +2163,59 @@
         sendToSheet('menu', name);
       });
     });
+
+    /* ---- Final submit button ---- */
+    function handleReadyClick() {
+      // Collect clothing selection
+      const clothing = document.querySelector('.cc.selected h4');
+      const clothingVal = clothing ? clothing.textContent.trim() : 'None';
+
+      // Collect all selected menu items
+      const menuItems = [...document.querySelectorAll('.mi.selected .mi-name')]
+        .map(el => el.textContent.trim());
+      const menuVal = menuItems.length ? menuItems.join(', ') : 'None';
+
+      // Send final summary to sheet
+      sendToSheet('final-submit', `Clothing: ${clothingVal} | Menu: ${menuVal}`);
+
+      // Show overlay
+      openOverlay();
+    }
+
+    function openOverlay() {
+      const ov = document.getElementById('readyOverlay');
+      ov.classList.add('show');
+      ov.setAttribute('aria-hidden', 'false');
+      spawnOverlayHearts();
+      // Auto-dismiss after 4s
+      window._ovTimer = setTimeout(closeOverlay, 4000);
+    }
+
+    function closeOverlay() {
+      clearTimeout(window._ovTimer);
+      const ov = document.getElementById('readyOverlay');
+      ov.classList.remove('show');
+      ov.setAttribute('aria-hidden', 'true');
+    }
+
+    function spawnOverlayHearts() {
+      const container = document.getElementById('ovHearts');
+      container.innerHTML = '';
+      const symbols = ['♥', '♡', '❤️', '✦', '♥', '♡'];
+      for (let i = 0; i < 18; i++) {
+        const h = document.createElement('span');
+        h.textContent = symbols[i % symbols.length];
+        h.style.cssText = `
+          position:absolute;
+          left:${Math.random() * 100}%;
+          font-size:${0.8 + Math.random() * 1.6}rem;
+          color:rgba(196,100,122,${0.4 + Math.random() * 0.5});
+          animation:floatHrt ${6 + Math.random() * 6}s linear ${Math.random() * 3}s infinite;
+          opacity:0;
+        `;
+        container.appendChild(h);
+      }
+    }
   </script>
 
 </body>
