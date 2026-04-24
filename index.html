@@ -1,0 +1,1979 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Harshi 🕯️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Dancing+Script:wght@500;600;700&display=swap"
+    rel="stylesheet" />
+  <style>
+    /* =============================================
+       CSS VARIABLES
+    ============================================= */
+    :root {
+      --black: #06030a;
+      --deep-wine: #6B1A2A;
+      --crimson: #8B0000;
+      --gold: #D4AF37;
+      --gold-light: #F0D060;
+      --gold-dim: rgba(212, 175, 55, 0.25);
+      --cream: #F5E6D3;
+      --rose: #C4647A;
+      --rose-glow: rgba(196, 100, 122, 0.5);
+      --glass: rgba(255, 255, 255, 0.035);
+      --glass-b: rgba(212, 175, 55, 0.18);
+    }
+
+    /* =============================================
+       RESET + BASE
+    ============================================= */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--cream);
+      font-family: 'Cormorant Garamond', serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* =============================================
+       CUSTOM CURSOR
+    ============================================= */
+    #cur {
+      width: 14px;
+      height: 14px;
+      background: var(--gold);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 16px var(--gold), 0 0 40px rgba(212, 175, 55, 0.4);
+      transition: transform 0.05s linear;
+      animation: curPulse 2s ease-in-out infinite;
+    }
+
+    #cur-ring {
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: left 0.1s ease, top 0.1s ease;
+    }
+
+    @keyframes curPulse {
+
+      0%,
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      50% {
+        transform: translate(-50%, -50%) scale(1.4);
+      }
+    }
+
+    /* =============================================
+       GLOBAL PARTICLES (fixed layer)
+    ============================================= */
+    #particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bokeh {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(25px);
+      animation: bokehDrift ease-in-out infinite;
+      opacity: 0.12;
+    }
+
+    @keyframes bokehDrift {
+
+      0%,
+      100% {
+        transform: translateY(0) scale(1);
+      }
+
+      50% {
+        transform: translateY(-28px) scale(1.08);
+      }
+    }
+
+    .ptcl {
+      position: absolute;
+      border-radius: 50%;
+      animation: ptclRise linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes ptclRise {
+      0% {
+        transform: translateY(102vh);
+        opacity: 0;
+      }
+
+      8% {
+        opacity: 1;
+      }
+
+      92% {
+        opacity: 0.5;
+      }
+
+      100% {
+        transform: translateY(-8vh);
+        opacity: 0;
+      }
+    }
+
+    /* =============================================
+       LOADING SCREEN
+    ============================================= */
+    #loading {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      animation: ldFade 0.9s ease forwards 3.6s;
+    }
+
+    @keyframes ldFade {
+      to {
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
+      }
+    }
+
+    .candle-wrap {
+      position: relative;
+      width: 60px;
+      margin-bottom: 32px;
+    }
+
+    .c-body {
+      width: 28px;
+      height: 75px;
+      background: linear-gradient(160deg, #f5e9c5, #e8d592, #c9a840);
+      border-radius: 4px 4px 2px 2px;
+      margin: 0 auto;
+      position: relative;
+      box-shadow: inset -4px 0 10px rgba(0, 0, 0, 0.25);
+    }
+
+    .c-wick {
+      width: 2px;
+      height: 14px;
+      background: #222;
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+
+    .c-flame {
+      width: 18px;
+      height: 28px;
+      background: linear-gradient(to bottom, #fff8b0 0%, #ffcc00 40%, #ff6600 80%, transparent 100%);
+      border-radius: 50% 50% 35% 35%;
+      position: absolute;
+      top: -44px;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 0 18px #ff9900, 0 0 40px rgba(255, 150, 0, 0.45);
+      animation: flicker 0.28s ease-in-out infinite alternate;
+    }
+
+    @keyframes flicker {
+      from {
+        transform: translateX(-50%) scaleX(1) scaleY(1) rotate(-3deg);
+      }
+
+      to {
+        transform: translateX(-50%) scaleX(0.82) scaleY(1.12) rotate(3deg);
+      }
+    }
+
+    .c-glow {
+      width: 70px;
+      height: 70px;
+      background: radial-gradient(circle, rgba(255, 180, 0, 0.25), transparent 70%);
+      border-radius: 50%;
+      position: absolute;
+      top: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: glowPulse 0.6s ease-in-out infinite alternate;
+    }
+
+    @keyframes glowPulse {
+      from {
+        opacity: 0.6;
+        transform: translateX(-50%) scale(1);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(-50%) scale(1.15);
+      }
+    }
+
+    .smoke {
+      width: 5px;
+      height: 35px;
+      background: linear-gradient(to top, rgba(255, 255, 255, 0.25), transparent);
+      border-radius: 50%;
+      position: absolute;
+      top: -82px;
+      left: 50%;
+      transform: translateX(-50%);
+      filter: blur(4px);
+      animation: smokeDrift 2.2s ease-in-out infinite;
+    }
+
+    .smoke2 {
+      width: 4px;
+      height: 25px;
+      background: linear-gradient(to top, rgba(255, 255, 255, 0.15), transparent);
+      border-radius: 50%;
+      position: absolute;
+      top: -90px;
+      left: calc(50% + 8px);
+      filter: blur(4px);
+      animation: smokeDrift2 1.8s ease-in-out infinite 0.4s;
+    }
+
+    @keyframes smokeDrift {
+      0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(0) scaleX(1);
+      }
+
+      40% {
+        opacity: 0.7;
+        transform: translateX(-60%) translateY(-14px) scaleX(1.5);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateX(-35%) translateY(-30px) scaleX(0.7);
+      }
+    }
+
+    @keyframes smokeDrift2 {
+      0% {
+        opacity: 0;
+        transform: translateY(0);
+      }
+
+      40% {
+        opacity: 0.5;
+        transform: translateX(5px) translateY(-10px);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateX(12px) translateY(-24px);
+      }
+    }
+
+    .ld-text {
+      font-size: 0.75rem;
+      letter-spacing: 5px;
+      color: rgba(212, 175, 55, 0.7);
+      text-transform: uppercase;
+      animation: ldTxtPulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes ldTxtPulse {
+
+      0%,
+      100% {
+        opacity: 0.45;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    .ld-sub {
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      color: rgba(212, 175, 55, 0.35);
+      margin-top: 8px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    /* =============================================
+       SCROLL REVEAL (CSS Scroll-Driven)
+    ============================================= */
+    .rv {
+      animation: rvUp ease both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 38%;
+    }
+
+    .rv-l {
+      animation: rvLeft ease both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 38%;
+    }
+
+    .rv-r {
+      animation: rvRight ease both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 38%;
+    }
+
+    @keyframes rvUp {
+      from {
+        opacity: 0;
+        transform: translateY(55px);
+        filter: blur(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+        filter: none;
+      }
+    }
+
+    @keyframes rvLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-55px);
+        filter: blur(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+        filter: none;
+      }
+    }
+
+    @keyframes rvRight {
+      from {
+        opacity: 0;
+        transform: translateX(55px);
+        filter: blur(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+        filter: none;
+      }
+    }
+
+    /* Delay helpers */
+    .d1 {
+      animation-delay: 0.1s;
+    }
+
+    .d2 {
+      animation-delay: 0.2s;
+    }
+
+    .d3 {
+      animation-delay: 0.3s;
+    }
+
+    .d4 {
+      animation-delay: 0.4s;
+    }
+
+    .d5 {
+      animation-delay: 0.5s;
+    }
+
+    /* =============================================
+       SHARED SECTION STYLES
+    ============================================= */
+    section {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 90px 24px;
+      overflow: hidden;
+    }
+
+    .sec-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 6px;
+      color: var(--gold);
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+
+    .sec-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5.5vw, 3.8rem);
+      font-weight: 700;
+      font-style: italic;
+      text-align: center;
+      line-height: 1.15;
+      background: linear-gradient(130deg, var(--cream) 0%, var(--gold-light) 50%, var(--cream) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 14px;
+    }
+
+    .sec-sub {
+      font-size: 1rem;
+      font-style: italic;
+      color: rgba(245, 230, 211, 0.55);
+      text-align: center;
+      max-width: 520px;
+      line-height: 1.8;
+      margin-bottom: 0;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.3), transparent);
+    }
+
+    /* =============================================
+       HERO SECTION
+    ============================================= */
+    #hero {
+      background:
+        radial-gradient(ellipse 60% 50% at 50% -5%, rgba(107, 26, 42, 0.35) 0%, transparent 100%),
+        radial-gradient(ellipse 40% 40% at 80% 85%, rgba(90, 40, 15, 0.2) 0%, transparent 100%),
+        var(--black);
+    }
+
+    .hero-float-hearts {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .hfh {
+      position: absolute;
+      color: var(--rose);
+      animation: floatHrt linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes floatHrt {
+      0% {
+        opacity: 0;
+        transform: translateY(100%) rotate(0deg) scale(0.8);
+      }
+
+      10% {
+        opacity: 0.5;
+      }
+
+      90% {
+        opacity: 0.15;
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-120%) rotate(360deg) scale(1.2);
+      }
+    }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 6px;
+      color: var(--gold);
+      text-transform: uppercase;
+      opacity: 0;
+      animation: eybFade 1s ease forwards 4.2s;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+
+    @keyframes eybFade {
+      from {
+        opacity: 0;
+        transform: translateY(-14px)
+      }
+
+      to {
+        opacity: 0.8;
+        transform: none
+      }
+    }
+
+    .hero-h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 9vw, 6.5rem);
+      font-weight: 900;
+      font-style: italic;
+      text-align: center;
+      line-height: 1.05;
+      opacity: 0;
+      animation: h1Pop 1.3s cubic-bezier(0.16, 1, 0.3, 1) forwards 4.5s;
+      background: linear-gradient(130deg, var(--cream) 0%, var(--gold-light) 45%, var(--cream) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.2));
+    }
+
+    @keyframes h1Pop {
+      from {
+        opacity: 0;
+        transform: scale(0.75);
+        filter: blur(12px) drop-shadow(0 0 0 transparent);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0) drop-shadow(0 0 30px rgba(212, 175, 55, 0.2));
+      }
+    }
+
+    .hero-tagline {
+      font-size: clamp(0.95rem, 2.5vw, 1.35rem);
+      font-style: italic;
+      text-align: center;
+      color: rgba(245, 230, 211, 0.65);
+      max-width: 480px;
+      line-height: 1.9;
+      opacity: 0;
+      animation: tagFade 1s ease forwards 5.2s;
+      margin-top: 18px;
+    }
+
+    @keyframes tagFade {
+      from {
+        opacity: 0;
+        transform: translateY(16px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    .hero-heart {
+      display: inline-block;
+      color: var(--rose);
+      -webkit-text-fill-color: var(--rose);
+      animation: heartbeat 1.3s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      15% {
+        transform: scale(1.35);
+      }
+
+      30% {
+        transform: scale(1);
+      }
+
+      45% {
+        transform: scale(1.25);
+      }
+
+      65% {
+        transform: scale(1);
+      }
+    }
+
+    .hero-name {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(4.5rem, 14vw, 10rem);
+      font-weight: 700;
+      line-height: 1;
+      text-align: center;
+      margin-top: 6px;
+      color: var(--rose);
+      text-shadow:
+        0 0 25px var(--rose-glow),
+        0 0 55px rgba(196, 100, 122, 0.35),
+        0 0 90px rgba(196, 100, 122, 0.15);
+      opacity: 0;
+      animation: nameReveal 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards 5.8s;
+    }
+
+    @keyframes nameReveal {
+      from {
+        opacity: 0;
+        transform: scale(0.4) translateY(20px);
+        filter: blur(24px);
+      }
+
+      60% {
+        transform: scale(1.06) translateY(-4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0);
+      }
+    }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: tagFade 1s ease forwards 7s;
+    }
+
+    .scroll-cue span {
+      font-size: 0.65rem;
+      letter-spacing: 4px;
+      color: rgba(212, 175, 55, 0.4);
+      text-transform: uppercase;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 44px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollLine 1.6s ease-in-out infinite;
+    }
+
+    @keyframes scrollLine {
+
+      0%,
+      100% {
+        transform: scaleY(1);
+        opacity: 0.8;
+      }
+
+      50% {
+        transform: scaleY(0.4);
+        opacity: 0.3;
+      }
+    }
+
+    /* =============================================
+       DRESS SECTION
+    ============================================= */
+    #dress {
+      background:
+        radial-gradient(ellipse 50% 60% at 25% 60%, rgba(107, 26, 42, 0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 75% 20%, rgba(70, 30, 55, 0.12) 0%, transparent 60%),
+        var(--black);
+    }
+
+    .dress-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 64px;
+      flex-wrap: wrap;
+      margin-top: 52px;
+      width: 100%;
+    }
+
+    /* ---- CSS-only dress figure ---- */
+    .css-figure {
+      position: relative;
+    }
+
+    .figure-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      filter: drop-shadow(0 0 35px rgba(139, 0, 0, 0.35));
+    }
+
+    .f-head {
+      width: 42px;
+      height: 42px;
+      background: radial-gradient(circle at 40% 35%, #f7e4c5, #e0c09a);
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(245, 210, 170, 0.25);
+    }
+
+    .f-neck {
+      width: 13px;
+      height: 16px;
+      background: linear-gradient(to bottom, #f0d9b0, #e0c09a);
+      margin: -1px auto 0;
+    }
+
+    .f-shoulders {
+      width: 82px;
+      height: 12px;
+      background: linear-gradient(90deg, #a01025 0%, #8B0000 50%, #a01025 100%);
+      border-radius: 20px 20px 0 0;
+      position: relative;
+    }
+
+    .f-shoulders::before,
+    .f-shoulders::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      width: 16px;
+      height: 8px;
+      background: rgba(212, 175, 55, 0.4);
+      border-radius: 50%;
+    }
+
+    .f-shoulders::before {
+      left: 8px;
+    }
+
+    .f-shoulders::after {
+      right: 8px;
+    }
+
+    .f-bodice {
+      width: 68px;
+      height: 72px;
+      background: linear-gradient(160deg, #a01025 0%, #8B0000 55%, #5a0d1a 100%);
+      border-radius: 0 0 18px 18px;
+      position: relative;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Neckline V */
+    .f-bodice::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 16px solid transparent;
+      border-right: 16px solid transparent;
+      border-top: 22px solid var(--black);
+    }
+
+    /* Gold detail */
+    .f-bodice::after {
+      content: '';
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 28px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+
+    .f-skirt {
+      width: 0;
+      height: 0;
+      border-left: 80px solid transparent;
+      border-right: 80px solid transparent;
+      border-top: 140px solid transparent;
+      position: relative;
+      margin-top: -2px;
+    }
+
+    .f-skirt::before {
+      content: '';
+      position: absolute;
+      top: -140px;
+      left: -60px;
+      width: 120px;
+      height: 140px;
+      background: linear-gradient(160deg, #9a1020 0%, #7a1520 50%, #5a0d1a 100%);
+      clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
+    }
+
+    .f-skirt::after {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: -80px;
+      width: 160px;
+      height: 8px;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
+    }
+
+    /* Sparkles */
+    .spl {
+      position: absolute;
+      color: var(--gold);
+      font-size: 0.9rem;
+      animation: sparkleTwink ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes sparkleTwink {
+
+      0%,
+      100% {
+        opacity: 0;
+        transform: scale(0.4) rotate(0deg);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1) rotate(180deg);
+      }
+    }
+
+    /* ---- Colour cards ---- */
+    .colour-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-width: 310px;
+      width: 100%;
+    }
+
+    .cc {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      background: var(--glass);
+      border: 1px solid var(--glass-b);
+      border-radius: 14px;
+      backdrop-filter: blur(12px);
+      cursor: pointer;
+      transition: all 0.35s ease;
+    }
+
+    .cc:hover {
+      background: rgba(212, 175, 55, 0.07);
+      border-color: var(--gold);
+      transform: translateX(10px);
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.15);
+    }
+
+    .cc-dot {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .cc-info h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      color: var(--cream);
+      margin-bottom: 2px;
+    }
+
+    .cc-info p {
+      font-size: 0.75rem;
+      color: rgba(245, 230, 211, 0.45);
+      font-style: italic;
+    }
+
+    .cc-badge {
+      margin-left: auto;
+      flex-shrink: 0;
+      font-size: 0.6rem;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, var(--deep-wine), var(--crimson));
+      color: var(--gold);
+      padding: 3px 9px;
+      border-radius: 30px;
+      text-transform: uppercase;
+    }
+
+    .colour-tip {
+      font-size: 0.78rem;
+      font-style: italic;
+      color: rgba(212, 175, 55, 0.55);
+      margin-top: 4px;
+      padding-left: 4px;
+    }
+
+    /* ---- Selected state for colour cards ---- */
+    .cc.selected {
+      border-color: var(--gold) !important;
+      background: rgba(212, 175, 55, 0.1) !important;
+      box-shadow: 0 0 26px rgba(212, 175, 55, 0.28), inset 0 0 12px rgba(212, 175, 55, 0.06);
+      transform: translateX(10px);
+    }
+
+    .cc {
+      position: relative;
+    }
+
+    .cc .cc-check {
+      display: none;
+      margin-left: auto;
+      flex-shrink: 0;
+      color: var(--gold);
+      font-size: 1.1rem;
+      animation: checkPop 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .cc.selected .cc-check {
+      display: block;
+    }
+
+    @keyframes checkPop {
+      from {
+        transform: scale(0) rotate(-20deg);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+      }
+    }
+
+    /* ---- Selected state for menu items ---- */
+    .mi.selected {
+      border-color: rgba(212, 175, 55, 0.7) !important;
+      background: rgba(212, 175, 55, 0.07) !important;
+      box-shadow: 0 0 24px rgba(212, 175, 55, 0.18);
+    }
+
+    .mi-name::after {
+      content: '';
+    }
+
+    .mi.selected .mi-name::after {
+      content: ' ✦';
+      color: var(--gold);
+      font-size: 0.8em;
+      -webkit-text-fill-color: var(--gold);
+      animation: checkPop 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    /* =============================================
+       MENU SECTION
+    ============================================= */
+    #menu {
+      background:
+        radial-gradient(ellipse 50% 40% at 50% 0%, rgba(100, 45, 15, 0.18) 0%, transparent 60%),
+        var(--black);
+      min-height: auto;
+      padding: 90px 24px;
+    }
+
+    /* Radio tab engine */
+    .t-r {
+      display: none;
+    }
+
+    .tab-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 42px;
+      margin-bottom: 32px;
+    }
+
+    .t-lbl {
+      padding: 8px 18px;
+      border: 1px solid var(--glass-b);
+      border-radius: 30px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      color: rgba(245, 230, 211, 0.55);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: var(--glass);
+      backdrop-filter: blur(5px);
+      user-select: none;
+    }
+
+    .t-lbl:hover {
+      color: var(--gold);
+      background: rgba(212, 175, 55, 0.08);
+      border-color: rgba(212, 175, 55, 0.45);
+    }
+
+    /* Active tab label */
+    #t1:checked~.menu-body .tab-bar .t-lbl[for="t1"],
+    #t2:checked~.menu-body .tab-bar .t-lbl[for="t2"],
+    #t3:checked~.menu-body .tab-bar .t-lbl[for="t3"],
+    #t4:checked~.menu-body .tab-bar .t-lbl[for="t4"],
+    #t5:checked~.menu-body .tab-bar .t-lbl[for="t5"],
+    #t6:checked~.menu-body .tab-bar .t-lbl[for="t6"],
+    #t7:checked~.menu-body .tab-bar .t-lbl[for="t7"],
+    #t8:checked~.menu-body .tab-bar .t-lbl[for="t8"] {
+      background: linear-gradient(90deg, var(--deep-wine), var(--crimson));
+      color: var(--gold-light);
+      border-color: transparent;
+      box-shadow: 0 0 18px rgba(139, 0, 0, 0.35);
+    }
+
+    /* Tab panels: all hidden */
+    .t-panel {
+      display: none;
+      width: 100%;
+      animation: panelIn 0.45s ease;
+    }
+
+    @keyframes panelIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* Show active panels */
+    #t1:checked~.menu-body #p1,
+    #t2:checked~.menu-body #p2,
+    #t3:checked~.menu-body #p3,
+    #t4:checked~.menu-body #p4,
+    #t5:checked~.menu-body #p5,
+    #t6:checked~.menu-body #p6,
+    #t7:checked~.menu-body #p7,
+    #t8:checked~.menu-body #p8 {
+      display: grid;
+    }
+
+    .menu-grid {
+      grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+      gap: 16px;
+      max-width: 940px;
+      width: 100%;
+    }
+
+    .mi {
+      padding: 22px 20px;
+      background: var(--glass);
+      border: 1px solid var(--glass-b);
+      border-radius: 18px;
+      backdrop-filter: blur(12px);
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mi::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.06), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .mi:hover {
+      border-color: rgba(212, 175, 55, 0.42);
+      transform: translateY(-5px) scale(1.01);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), 0 0 25px rgba(212, 175, 55, 0.12);
+    }
+
+    .mi:hover::after {
+      opacity: 1;
+    }
+
+    .mi-emoji {
+      font-size: 1.9rem;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .mi-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      color: var(--cream);
+      margin-bottom: 5px;
+    }
+
+    .mi-vibe {
+      font-size: 0.74rem;
+      font-style: italic;
+      color: rgba(245, 230, 211, 0.42);
+      line-height: 1.45;
+    }
+
+    .mi-star {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      font-size: 0.62rem;
+      letter-spacing: 0.5px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* =============================================
+       FEELINGS SECTION
+    ============================================= */
+    #feelings {
+      background:
+        radial-gradient(ellipse 55% 55% at 50% 50%, rgba(139, 0, 0, 0.14) 0%, transparent 65%),
+        var(--black);
+    }
+
+    .feel-card {
+      max-width: 660px;
+      width: 100%;
+      padding: 64px 52px;
+      background: var(--glass);
+      border: 1px solid var(--glass-b);
+      border-radius: 28px;
+      backdrop-filter: blur(20px);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 70px rgba(107, 26, 42, 0.18);
+    }
+
+    .feel-card::before {
+      content: '"';
+      position: absolute;
+      top: -30px;
+      left: 16px;
+      font-family: 'Playfair Display', serif;
+      font-size: 14rem;
+      line-height: 1;
+      color: rgba(212, 175, 55, 0.04);
+      pointer-events: none;
+    }
+
+    .fl {
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      line-height: 2;
+      color: rgba(245, 230, 211, 0.75);
+    }
+
+    .fl.g {
+      color: var(--gold);
+      font-style: italic;
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+    }
+
+    .fl.lg {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      color: var(--cream);
+    }
+
+    .fl.sm {
+      font-size: 0.88rem;
+      opacity: 0.55;
+      margin-top: 14px;
+    }
+
+    /* tiny floating hearts in card */
+    .feel-float {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .ff {
+      position: absolute;
+      color: var(--rose);
+      opacity: 0;
+      animation: floatHrt linear infinite;
+    }
+
+    /* =============================================
+       FINAL SECTION
+    ============================================= */
+    #final {
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 55%, rgba(139, 0, 0, 0.22) 0%, rgba(60, 10, 20, 0.18) 45%, transparent 75%),
+        var(--black);
+      text-align: center;
+      gap: 0;
+      padding: 100px 24px;
+    }
+
+    .final-pre {
+      font-size: 0.72rem;
+      letter-spacing: 5px;
+      color: rgba(212, 175, 55, 0.55);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .ily {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 10vw, 7rem);
+      font-weight: 900;
+      font-style: italic;
+      line-height: 1;
+      background: linear-gradient(130deg, var(--cream) 0%, var(--gold-light) 40%, var(--rose) 70%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: ilySway 3.5s ease-in-out infinite;
+      filter: drop-shadow(0 0 30px rgba(196, 100, 122, 0.3));
+    }
+
+    @keyframes ilySway {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.025);
+      }
+    }
+
+    .final-name {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(5.5rem, 20vw, 14rem);
+      font-weight: 700;
+      line-height: 1;
+      margin-top: 4px;
+      color: var(--rose);
+      text-shadow:
+        0 0 25px rgba(196, 100, 122, 0.85),
+        0 0 55px rgba(196, 100, 122, 0.55),
+        0 0 95px rgba(196, 100, 122, 0.3),
+        0 0 140px rgba(196, 100, 122, 0.15);
+      animation: fNameGlow 2.2s ease-in-out infinite alternate;
+    }
+
+    @keyframes fNameGlow {
+      from {
+        text-shadow: 0 0 25px rgba(196, 100, 122, 0.85), 0 0 55px rgba(196, 100, 122, 0.55), 0 0 95px rgba(196, 100, 122, 0.3);
+      }
+
+      to {
+        text-shadow: 0 0 45px rgba(196, 100, 122, 1), 0 0 90px rgba(196, 100, 122, 0.7), 0 0 150px rgba(196, 100, 122, 0.4), 0 0 200px rgba(196, 100, 122, 0.2);
+      }
+    }
+
+    /* Glow rings */
+    .gring {
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border: 1px solid rgba(196, 100, 122, 0.4);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      animation: gringExpand 3.5s ease-out infinite;
+      opacity: 0;
+    }
+
+    @keyframes gringExpand {
+      0% {
+        transform: translate(-50%, -50%) scale(0.2);
+        opacity: 0.7;
+      }
+
+      100% {
+        transform: translate(-50%, -50%) scale(5);
+        opacity: 0;
+      }
+    }
+
+    .heart-row {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+
+    .hr-h {
+      font-size: 1.8rem;
+      color: var(--rose);
+      animation: hrBurst ease-out both;
+      animation-timeline: view();
+      animation-range: entry 40% entry 70%;
+    }
+
+    @keyframes hrBurst {
+      from {
+        opacity: 0;
+        transform: scale(0) rotate(-40deg);
+      }
+
+      60% {
+        transform: scale(1.3) rotate(8deg);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+      }
+    }
+
+    .final-msg {
+      font-size: 1rem;
+      font-style: italic;
+      color: rgba(245, 230, 211, 0.5);
+      max-width: 380px;
+      line-height: 1.9;
+      margin-top: 32px;
+      text-align: center;
+    }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width:640px) {
+      .dress-wrap {
+        flex-direction: column;
+        gap: 44px;
+      }
+
+      .feel-card {
+        padding: 40px 22px;
+      }
+
+      .menu-grid {
+        grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+      }
+
+      .colour-stack {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ======= CURSOR ======= -->
+  <div id="cur"></div>
+  <div id="cur-ring"></div>
+
+  <!-- ======= PARTICLES ======= -->
+  <div id="particles">
+    <div class="bokeh"
+      style="width:220px;height:220px;background:rgba(107,26,42,0.5);top:8%;left:3%;animation-duration:9s;"></div>
+    <div class="bokeh"
+      style="width:160px;height:160px;background:rgba(212,175,55,0.3);top:55%;left:82%;animation-duration:7s;animation-delay:1.5s;">
+    </div>
+    <div class="bokeh"
+      style="width:130px;height:130px;background:rgba(196,100,122,0.35);top:35%;left:48%;animation-duration:11s;animation-delay:3s;">
+    </div>
+    <div class="bokeh"
+      style="width:90px;height:90px;background:rgba(139,0,0,0.4);top:78%;left:18%;animation-duration:8s;animation-delay:2s;">
+    </div>
+    <div class="bokeh"
+      style="width:110px;height:110px;background:rgba(212,175,55,0.2);top:15%;left:68%;animation-duration:10s;animation-delay:4s;">
+    </div>
+
+    <div class="ptcl" style="width:3px;height:3px;background:rgba(212,175,55,0.8);left:8%;animation-duration:13s;">
+    </div>
+    <div class="ptcl"
+      style="width:2px;height:2px;background:rgba(196,100,122,0.9);left:18%;animation-duration:16s;animation-delay:2s;">
+    </div>
+    <div class="ptcl"
+      style="width:4px;height:4px;background:rgba(212,175,55,0.6);left:33%;animation-duration:11s;animation-delay:5s;">
+    </div>
+    <div class="ptcl"
+      style="width:2px;height:2px;background:rgba(245,230,211,0.7);left:47%;animation-duration:14s;animation-delay:1s;">
+    </div>
+    <div class="ptcl"
+      style="width:3px;height:3px;background:rgba(196,100,122,0.8);left:62%;animation-duration:12s;animation-delay:3s;">
+    </div>
+    <div class="ptcl"
+      style="width:2px;height:2px;background:rgba(212,175,55,0.9);left:76%;animation-duration:15s;animation-delay:6s;">
+    </div>
+    <div class="ptcl"
+      style="width:4px;height:4px;background:rgba(245,230,211,0.5);left:88%;animation-duration:10s;animation-delay:4s;">
+    </div>
+    <div class="ptcl"
+      style="width:3px;height:3px;background:rgba(196,100,122,0.7);left:42%;animation-duration:17s;animation-delay:7s;">
+    </div>
+    <div class="ptcl"
+      style="width:2px;height:2px;background:rgba(212,175,55,0.8);left:71%;animation-duration:13s;animation-delay:8s;">
+    </div>
+    <div class="ptcl"
+      style="width:3px;height:3px;background:rgba(139,0,0,0.7);left:28%;animation-duration:11s;animation-delay:9s;">
+    </div>
+    <div class="ptcl"
+      style="width:2px;height:2px;background:rgba(245,230,211,0.6);left:55%;animation-duration:14s;animation-delay:2.5s;">
+    </div>
+    <div class="ptcl"
+      style="width:4px;height:4px;background:rgba(212,175,55,0.5);left:92%;animation-duration:9s;animation-delay:3.5s;">
+    </div>
+  </div>
+
+  <!-- ======= LOADING SCREEN ======= -->
+  <div id="loading">
+    <div class="candle-wrap">
+      <div class="c-glow"></div>
+      <div class="smoke"></div>
+      <div class="smoke2"></div>
+      <div class="c-flame"></div>
+      <div class="c-body">
+        <div class="c-wick"></div>
+      </div>
+    </div>
+    <p class="ld-text">Setting the mood</p>
+    <p class="ld-sub">Just for you &nbsp;✦&nbsp; Tonight</p>
+  </div>
+
+  <!-- ============================================================
+     SECTION 1 — HERO
+============================================================ -->
+  <section id="hero">
+    <div class="hero-float-hearts">
+      <span class="hfh" style="left:4%;font-size:1.1rem;animation-duration:9s;animation-delay:7s;">♥</span>
+      <span class="hfh" style="left:14%;font-size:0.8rem;animation-duration:12s;animation-delay:9.5s;">♡</span>
+      <span class="hfh" style="left:28%;font-size:1.3rem;animation-duration:10s;animation-delay:8s;">♥</span>
+      <span class="hfh" style="left:55%;font-size:0.9rem;animation-duration:8s;animation-delay:11s;">♡</span>
+      <span class="hfh" style="left:70%;font-size:1.2rem;animation-duration:11s;animation-delay:7.5s;">♥</span>
+      <span class="hfh" style="left:84%;font-size:0.7rem;animation-duration:13s;animation-delay:10s;">♡</span>
+      <span class="hfh" style="left:92%;font-size:1rem;animation-duration:9s;animation-delay:12s;">♥</span>
+    </div>
+
+    <p class="hero-eyebrow">a little something from me &nbsp;✦&nbsp; just for you</p>
+    <h1 class="hero-h1">Tonight is not<br />just a night…</h1>
+    <p class="hero-tagline">
+      It's something I planned — carefully, quietly —<br />
+      just for you <span class="hero-heart">♥</span>
+    </p>
+    <div class="hero-name">Harshi</div>
+
+    <div class="scroll-cue">
+      <span>Scroll to discover</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ============================================================
+     SECTION 2 — DRESS
+============================================================ -->
+  <section id="dress">
+    <p class="sec-eyebrow rv d1">what to wear tonight</p>
+    <h2 class="sec-title rv d2">Dress to Feel Like You</h2>
+    <p class="sec-sub rv d3">I have a feeling for what would look stunning tonight — but the choice is always yours ✦
+    </p>
+
+    <div class="dress-wrap">
+      <!-- CSS Dress Figure -->
+      <div class="css-figure rv-l">
+        <div class="figure-inner">
+          <!-- Sparkle decorations -->
+          <span class="spl" style="top:-18px;left:-22px;animation-delay:0s;animation-duration:2.4s;">✦</span>
+          <span class="spl" style="top:14px;right:-28px;animation-delay:0.6s;animation-duration:1.9s;">✧</span>
+          <span class="spl" style="top:70px;left:-32px;animation-delay:1.1s;animation-duration:2.8s;">✦</span>
+          <span class="spl" style="top:120px;right:-24px;animation-delay:1.7s;animation-duration:2.1s;">✧</span>
+          <span class="spl" style="bottom:70px;left:-18px;animation-delay:0.9s;animation-duration:2.5s;">✦</span>
+          <span class="spl" style="bottom:40px;right:-20px;animation-delay:0.3s;animation-duration:2s;">✧</span>
+          <span class="spl" style="bottom:10px;left:10px;animation-delay:1.4s;animation-duration:2.3s;">✦</span>
+
+          <div class="f-head"></div>
+          <div class="f-neck"></div>
+          <div class="f-shoulders"></div>
+          <div class="f-bodice"></div>
+          <div class="f-skirt"></div>
+        </div>
+      </div>
+
+      <!-- Colour Options -->
+      <div class="colour-stack rv-r">
+        <div class="cc">
+          <div class="cc-dot" style="background:#8B1A2A;box-shadow:0 0 14px rgba(139,26,42,0.7);"></div>
+          <div class="cc-info">
+            <h4>Deep Wine / Burgundy</h4>
+            <p>Bold. Romantic. The real main character.</p>
+          </div>
+          <span class="cc-badge">✦ Tonight</span>
+          <span class="cc-check">✦</span>
+        </div>
+
+        <div class="cc">
+          <div class="cc-dot" style="background:#C4647A;box-shadow:0 0 14px rgba(196,100,122,0.6);"></div>
+          <div class="cc-info">
+            <h4>Dusty Rose / Blush</h4>
+            <p>Delicate. Warm. Candlelight loves this tone.</p>
+          </div>
+          <span class="cc-badge">✦ Glows</span>
+          <span class="cc-check">✦</span>
+        </div>
+
+        <div class="cc">
+          <div class="cc-dot" style="background:#141014;border:1px solid #444;box-shadow:0 0 10px rgba(80,80,80,0.3);">
+          </div>
+          <div class="cc-info">
+            <h4>Deep Black</h4>
+            <p>Classic. Mysterious. Timeless elegance.</p>
+          </div>
+          <span class="cc-check">✦</span>
+        </div>
+
+        <div class="cc">
+          <div class="cc-dot" style="background:#f0e8d8;box-shadow:0 0 12px rgba(240,230,210,0.4);"></div>
+          <div class="cc-info">
+            <h4>Ivory / Cream</h4>
+            <p>Soft. Ethereal. Pure angel energy.</p>
+          </div>
+          <span class="cc-check">✦</span>
+        </div>
+
+        <div class="cc">
+          <div class="cc-dot" style="background:#6B7C5C;box-shadow:0 0 13px rgba(107,124,92,0.55);"></div>
+          <div class="cc-info">
+            <h4>Forest Sage / Olive</h4>
+            <p>Earthy. Unexpected. Effortlessly chic.</p>
+          </div>
+          <span class="cc-check">✦</span>
+        </div>
+
+        <div class="cc">
+          <div class="cc-dot" style="background:#1B2850;box-shadow:0 0 13px rgba(27,40,80,0.7);"></div>
+          <div class="cc-info">
+            <h4>Midnight Navy</h4>
+            <p>Sophisticated. Cool. Quietly stunning.</p>
+          </div>
+          <span class="cc-check">✦</span>
+        </div>
+
+        <div class="cc">
+          <div class="cc-dot" style="background:#B5522A;box-shadow:0 0 13px rgba(181,82,42,0.6);"></div>
+          <div class="cc-info">
+            <h4>Warm Terracotta / Rust</h4>
+            <p>Vibrant. Grounded. Candle-worthy glow.</p>
+          </div>
+          <span class="cc-check">✦</span>
+        </div>
+
+        <p class="colour-tip">Psst — warm tones glow like magic under candlelight 🕯️</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ============================================================
+     SECTION 3 — MENU (CSS-only tabs)
+============================================================ -->
+  <section id="menu">
+    <p class="sec-eyebrow rv d1">tonight's spread</p>
+    <h2 class="sec-title rv d2">Pick What You're Craving</h2>
+    <p class="sec-sub rv d3">Every item was chosen with tonight in mind — tap a category and find your vibe ✦</p>
+
+    <!-- Radio inputs must be siblings of menu-body -->
+    <input type="radio" name="mt" id="t1" class="t-r" checked>
+    <input type="radio" name="mt" id="t2" class="t-r">
+    <input type="radio" name="mt" id="t3" class="t-r">
+    <input type="radio" name="mt" id="t4" class="t-r">
+    <input type="radio" name="mt" id="t5" class="t-r">
+    <input type="radio" name="mt" id="t6" class="t-r">
+    <input type="radio" name="mt" id="t7" class="t-r">
+    <input type="radio" name="mt" id="t8" class="t-r">
+
+    <div class="menu-body" style="width:100%;max-width:960px;display:contents;">
+
+      <div class="tab-bar">
+        <label class="t-lbl" for="t1">🍝 Pasta</label>
+        <label class="t-lbl" for="t2">🍜 Starters</label>
+        <label class="t-lbl" for="t3">🥟 Momos</label>
+        <label class="t-lbl" for="t4">🍟 Fries</label>
+        <label class="t-lbl" for="t5">🥪 Sandwiches</label>
+        <label class="t-lbl" for="t6">🍔 Burgers</label>
+        <label class="t-lbl" for="t7">🍜 Rice &amp; Noodles</label>
+        <label class="t-lbl" for="t8">🍦 Ice Cream</label>
+      </div>
+
+      <!-- PASTA -->
+      <div id="p1" class="t-panel menu-grid">
+        <div class="mi"><span class="mi-emoji">🍝</span>
+          <div class="mi-name">Mushroom Pasta</div>
+          <div class="mi-vibe">Rich, earthy, feels gourmet — top pick for tonight</div><span class="mi-star">★ Top
+            Pick</span>
+        </div>
+        <div class="mi"><span class="mi-emoji">🍝</span>
+          <div class="mi-name">Paneer Pasta</div>
+          <div class="mi-vibe">Desi soul in an Italian body — comfort meets fancy</div><span class="mi-star">★ Must
+            Try</span>
+        </div>
+        <div class="mi"><span class="mi-emoji">🍝</span>
+          <div class="mi-name">Tomato Pasta</div>
+          <div class="mi-vibe">Light, clean, classic — never fails on a special night</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🍝</span>
+          <div class="mi-name">Mushroom Schezwan Pasta</div>
+          <div class="mi-vibe">Adventurous and bold — for the couple who likes surprises</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🍝</span>
+          <div class="mi-name">Schezwan Veg Pasta</div>
+          <div class="mi-vibe">Indo-Italian fusion — spicy, silky, surprisingly great</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🍝</span>
+          <div class="mi-name">Veg Pasta</div>
+          <div class="mi-vibe">Simple, satisfying — when the mood calls for something soft</div>
+        </div>
+      </div>
+
+      <!-- STARTERS -->
+      <div id="p2" class="t-panel menu-grid">
+        <div class="mi"><span class="mi-emoji">🧅</span>
+          <div class="mi-name">Paneer Manchurian</div>
+          <div class="mi-vibe">Classic indo-chinese magic — dry version, easy to share</div><span class="mi-star">★ Top
+            Pick</span>
+        </div>
+        <div class="mi"><span class="mi-emoji">🌶️</span>
+          <div class="mi-name">Paneer Chilli</div>
+          <div class="mi-vibe">Tangy, bold, punchy — a real conversation starter</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🍄</span>
+          <div class="mi-name">Mushroom Chilli</div>
+          <div class="mi-vibe">Earthy + spicy — surprisingly fancy feeling</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🍄</span>
+          <div class="mi-name">Mushroom Manchurian</div>
+          <div class="mi-vibe">Smoky, rich, underrated — a real hidden gem</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🍄</span>
+          <div class="mi-name">Mushroom 65</div>
+          <div class="mi-vibe">Crispy outside, juicy inside — pure delight in each bite</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🥦</span>
+          <div class="mi-name">Gobi 65</div>
+          <div class="mi-vibe">Crispy, light — very snackable together</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🥦</span>
+          <div class="mi-name">Gobi Manchurian</div>
+          <div class="mi-vibe">The classic everyone loves — never disappoints</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🥦</span>
+          <div class="mi-name">Gobi Chilli</div>
+          <div class="mi-vibe">Spicy cauliflower bites — simple and satisfying</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🧀</span>
+          <div class="mi-name">Paneer 65</div>
+          <div class="mi-vibe">Southern style, golden and glorious — gorgeous on a plate</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🌽</span>
+          <div class="mi-name">Baby Corn Manchurian</div>
+          <div class="mi-vibe">Cute, aesthetic, fun to eat — looks great on a date table</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🌽</span>
+          <div class="mi-name">Chilli Baby Corn</div>
+          <div class="mi-vibe">Punchy and playful — great sharing bite</div>
+        </div>
+      </div>
+
+      <!-- MOMOS -->
+      <div id="p3" class="t-panel menu-grid">
+        <div class="mi"><span class="mi-emoji">🥟</span>
+          <div class="mi-name">Paneer Momo (8 Pc)</div>
+          <div class="mi-vibe">Creamy filling, soft bite — the coziest date food there is</div><span class="mi-star">★
+            Top Pick</span>
+        </div>
+        <div class="mi"><span class="mi-emoji">🥟</span>
+          <div class="mi-name">Schezwan Momo (8 Pc)</div>
+          <div class="mi-vibe">Spicy kick for the bold ones — fiery and fun</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🥟</span>
+          <div class="mi-name">Mixed Veg Momo (8 Pc)</div>
+          <div class="mi-vibe">Safe, light, perfect for sharing between two</div>
+        </div>
+      </div>
+
+      <!-- FRIES -->
+      <div id="p4" class="t-panel menu-grid">
+        <div class="mi"><span class="mi-emoji">🧀</span>
+          <div class="mi-name">Cheese Fries (Medium)</div>
+          <div class="mi-vibe">One plate, two people — peak date energy right here</div><span class="mi-star">★ Date
+            Fave</span>
+        </div>
+        <div class="mi"><span class="mi-emoji">🌶️</span>
+          <div class="mi-name">Peri Peri Fries (Medium)</div>
+          <div class="mi-vibe">Spicy, flavourful — great for sharing with a smile</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🍟</span>
+          <div class="mi-name">Normal Salt Fries (Medium)</div>
+          <div class="mi-vibe">Classic and clean — when everything else is rich</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🧀</span>
+          <div class="mi-name">Cheese Fries (Large)</div>
+          <div class="mi-vibe">Go big tonight — you deserve the large</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🌶️</span>
+          <div class="mi-name">Peri Peri Fries (Large)</div>
+          <div class="mi-vibe">Twice the spice, twice the fun — go for it</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🍟</span>
+          <div class="mi-name">Normal Salt Fries (Large)</div>
+          <div class="mi-vibe">Simple done large — comfort in its purest form</div>
+        </div>
+      </div>
+
+      <!-- SANDWICHES -->
+      <div id="p5" class="t-panel menu-grid">
+        <div class="mi"><span class="mi-emoji">🍪</span>
+          <div class="mi-name">Lotus Biscoff Sandwich</div>
+          <div class="mi-vibe">Sweet, unique, dessert-y — a truly memorable last bite</div><span class="mi-star">★ Wild
+            Card</span>
+        </div>
+        <div class="mi"><span class="mi-emoji">🥪</span>
+          <div class="mi-name">Paneer Tikka Sandwich</div>
+          <div class="mi-vibe">Smoky, filling — feels special and elevated tonight</div><span class="mi-star">★ Top
+            Pick</span>
+        </div>
+        <div class="mi"><span class="mi-emoji">🥪</span>
+          <div class="mi-name">Great Paneer Sandwich</div>
+          <div class="mi-vibe">"Great" is in the name for a reason — try it</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🔥</span>
+          <div class="mi-name">Tandoori Sandwich</div>
+          <div class="mi-vibe">Smoky grilled vibes — bold, beautiful, memorable</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🧀</span>
+          <div class="mi-name">Cheese Corn Sandwich</div>
+          <div class="mi-vibe">Sweet corn + melted cheese — pure warm comfort</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🥪</span>
+          <div class="mi-name">Paneer Sandwich</div>
+          <div class="mi-vibe">Classic and reliable — soft and satisfying</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🧀</span>
+          <div class="mi-name">Cheese Sandwich</div>
+          <div class="mi-vibe">Simple melty goodness — never a wrong choice</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🌽</span>
+          <div class="mi-name">Corn Sandwich</div>
+          <div class="mi-vibe">Light and sweet — a lovely palate cleanser</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🥗</span>
+          <div class="mi-name">Veg Sandwich</div>
+          <div class="mi-vibe">Fresh, crisp, simple — when you want something clean</div>
+        </div>
+      </div>
+
+      <!-- BURGERS -->
+      <div id="p6" class="t-panel menu-grid">
+        <div class="mi"><span class="mi-emoji">🗼</span>
+          <div class="mi-name">Special Tower Burger</div>
+          <div class="mi-vibe">The showstopper. Massive, dramatic, utterly unforgettable</div><span class="mi-star">★
+            Bold Move</span>
+        </div>
+        <div class="mi"><span class="mi-emoji">✨</span>
+          <div class="mi-name">Special Burger</div>
+          <div class="mi-vibe">A step above the ordinary — because tonight is special</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🍄</span>
+          <div class="mi-name">Mushroom Burger</div>
+          <div class="mi-vibe">Subtle, different — quietly makes a great impression</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🍔</span>
+          <div class="mi-name">Paneer Burger</div>
+          <div class="mi-vibe">Safe, filling, familiar — the comfort pick</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🍔</span>
+          <div class="mi-name">Veg Burger</div>
+          <div class="mi-vibe">Classic and clean — simple done exactly right</div>
+        </div>
+      </div>
+
+      <!-- RICE & NOODLES -->
+      <div id="p7" class="t-panel menu-grid">
+        <div class="mi"><span class="mi-emoji">🍜</span>
+          <div class="mi-name">Mushroom Schezwan</div>
+          <div class="mi-vibe">Smoky, spicy, silky — a full flavour experience in one dish</div><span class="mi-star">★
+            Top Pick</span>
+        </div>
+        <div class="mi"><span class="mi-emoji">🌽</span>
+          <div class="mi-name">Baby Corn Schezwan</div>
+          <div class="mi-vibe">Crunchy meets silky — light and playful</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🥢</span>
+          <div class="mi-name">Veg Schezwan</div>
+          <div class="mi-vibe">The comforting classic — warm, satisfying, always right</div>
+        </div>
+      </div>
+
+      <!-- ICE CREAM -->
+      <div id="p8" class="t-panel menu-grid">
+        <div class="mi"><span class="mi-emoji">🍦</span>
+          <div class="mi-name">Vanilla</div>
+          <div class="mi-vibe">Timeless. Pure. Classic. The one that never fails anyone</div><span class="mi-star">★
+            Classic</span>
+        </div>
+        <div class="mi"><span class="mi-emoji">🍫</span>
+          <div class="mi-name">Chocolate</div>
+          <div class="mi-vibe">Rich, indulgent, irresistible — dessert royalty always</div><span class="mi-star">★ Fan
+            Fave</span>
+        </div>
+        <div class="mi"><span class="mi-emoji">🍓</span>
+          <div class="mi-name">Strawberry</div>
+          <div class="mi-vibe">Sweet, fruity, romantic — the pinkest possible ending</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🌾</span>
+          <div class="mi-name">Butterscotch</div>
+          <div class="mi-vibe">Warm caramel soul — cozy and utterly unforgettable</div>
+        </div>
+        <div class="mi"><span class="mi-emoji">🫐</span>
+          <div class="mi-name">Black Currant</div>
+          <div class="mi-vibe">Bold, deep, purple-hued — mysterious and beautiful</div>
+        </div>
+      </div>
+
+    </div><!-- end menu-body -->
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ============================================================
+     SECTION 4 — FEELINGS
+============================================================ -->
+  <section id="feelings">
+    <p class="sec-eyebrow rv d1">just a little note</p>
+    <h2 class="sec-title rv d2">Before Tonight Begins</h2>
+
+    <div class="feel-card rv d3">
+      <div class="feel-float">
+        <span class="ff" style="left:8%;animation-duration:7s;animation-delay:0s;">♡</span>
+        <span class="ff" style="left:78%;animation-duration:8.5s;animation-delay:1s;">♥</span>
+        <span class="ff" style="left:48%;animation-duration:6s;animation-delay:2s;">♡</span>
+        <span class="ff" style="left:28%;animation-duration:9s;animation-delay:0.5s;">♥</span>
+        <span class="ff" style="left:62%;animation-duration:7.5s;animation-delay:1.5s;">♡</span>
+      </div>
+
+      <p class="fl" style="margin-bottom:4px;">I don't always say the right words.</p>
+      <p class="fl">I don't always get everything right.</p>
+      <p class="fl g" style="margin-top:10px;">But tonight — I tried.</p>
+      <p class="fl lg" style="margin-top:20px;">Every detail, every choice,<br />every moment of tonight —</p>
+      <p class="fl" style="margin-top:12px;">is just my way of saying</p>
+      <p class="fl g" style="font-size:clamp(1.4rem,4vw,2rem);margin-top:10px;">how much I care about you.</p>
+      <p class="fl sm">Now stop reading. Get ready. Tonight is waiting. 🕯️</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ============================================================
+     SECTION 5 — FINAL
+============================================================ -->
+  <section id="final">
+    <div class="gring" style="animation-delay:0s;"></div>
+    <div class="gring" style="animation-delay:1.2s;"></div>
+    <div class="gring" style="animation-delay:2.4s;"></div>
+
+    <p class="final-pre rv">and one last thing…</p>
+
+    <div class="ily rv d2">I Love You</div>
+
+    <div class="final-name rv d3">Harshi</div>
+
+    <div class="heart-row">
+      <span class="hr-h" style="animation-delay:0.1s;">♥</span>
+      <span class="hr-h" style="animation-delay:0.25s;">♡</span>
+      <span class="hr-h" style="animation-delay:0.4s;">♥</span>
+      <span class="hr-h" style="animation-delay:0.55s;">♡</span>
+      <span class="hr-h" style="animation-delay:0.7s;">♥</span>
+    </div>
+
+    <p class="final-msg rv">
+      Tonight isn't just dinner.<br />
+      It's a memory I want to make<br />with you. 🕯️
+    </p>
+  </section>
+
+  <!-- ======= CURSOR + INTERACTION JS ======= -->
+  <script>
+    /* ---- Google Sheets URL (paste your deployed Apps Script URL here) ---- */
+    const SHEET_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+
+    /* ---- POST helper ---- */
+    function sendToSheet(type, value) {
+      if (!SHEET_URL || SHEET_URL === 'YOUR_APPS_SCRIPT_URL_HERE') return;
+      fetch(SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type, value, timestamp: new Date().toISOString() })
+      }).catch(() => { });
+    }
+
+    /* ---- Cursor ---- */
+    const c = document.getElementById('cur');
+    const cr = document.getElementById('cur-ring');
+    let rx = 0, ry = 0, mx = 0, my = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      c.style.left = mx + 'px'; c.style.top = my + 'px';
+    });
+    (function loop() {
+      rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+      cr.style.left = rx + 'px'; cr.style.top = ry + 'px';
+      requestAnimationFrame(loop);
+    })();
+
+    /* ---- Clothing colour card clicks ---- */
+    document.querySelectorAll('.cc').forEach(card => {
+      card.addEventListener('click', () => {
+        const wasSelected = card.classList.contains('selected');
+        document.querySelectorAll('.cc').forEach(c => c.classList.remove('selected'));
+        if (!wasSelected) {
+          card.classList.add('selected');
+          const name = card.querySelector('h4').textContent.trim();
+          sendToSheet('clothing', name);
+        }
+      });
+    });
+
+    /* ---- Menu item clicks ---- */
+    document.querySelectorAll('.mi').forEach(item => {
+      item.addEventListener('click', () => {
+        const selected = item.classList.toggle('selected');
+        const name = item.querySelector('.mi-name').textContent.trim();
+        sendToSheet('menu', name);
+      });
+    });
+  </script>
+
+</body>
+
+</html>
